@@ -26,16 +26,23 @@ let score = {
     p2_score : 0
 }
 
+let p1_btn_menu = document.getElementById("p1_btn_menu");
+let rnd_result = document.getElementById("rnd_result");
+let score_disp = document.getElementById("score_disp");
+
+/**
+ * REGISTER EVENT LISTENERS
+ */
+
+p1_btn_menu.addEventListener('click', playRound);
+
+
 /**
  * SUPORTING FUNCTIONS
  */
 
-function getP1Choice() {
-    // get input and only exit if choice is valid
-    while (!CHOICES_ARR.includes(p1_choice,0)) {
-        p1_choice = prompt(`Please choose rock, paper, or scissors by typing "${CHOICES.ROCK}", "${CHOICES.PAPER}", or "${CHOICES.SCISSORS}", respectively then hitting Enter.`
-        ).toLowerCase();
-    }
+function getP1Choice(event) {
+    p1_choice = event.target.value;
 }
 
 function getP2Choice() {
@@ -78,10 +85,11 @@ function printScore() {
     console.log(`\nScore:\nPlayer 1 : ${score.p1_score}\nPlayer 2 : ${score.p2_score}`)
 }
 
-function playRound() {
-    getP1Choice();
+function playRound(event) {
+    getP1Choice(event);
     getP2Choice();
-    return evalWinner();
+    rnd_result.textContent =  evalWinner();
+    score_disp.textContent = printScore();
 }
 
 function resetChoices() {
@@ -89,20 +97,6 @@ function resetChoices() {
     p2_choice = null;
 }
 
-function game() {
-    while (true) {
-        console.log(`******************** ROUND ${i} ********************`)
-        let rnd_result = playRound();
-        console.log(
-            `Player 1 chose ${CHOICES_STR[p1_choice]} and player 2 chose ${CHOICES_STR[p2_choice]}.
-            ${rnd_result}`
-        );
-        printScore();
-        resetChoices();
-    }
+function gameOver() {
+    
 }
-
-/**
- * MAIN
- */
-game();
