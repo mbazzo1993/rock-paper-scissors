@@ -90,7 +90,7 @@ function resetChoices() {
 }
 
 function game() {
-    for (let i = 1; i < 6; i++) {
+    while (true) {
         console.log(`******************** ROUND ${i} ********************`)
         let rnd_result = playRound();
         console.log(
