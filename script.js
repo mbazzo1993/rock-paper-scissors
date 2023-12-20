@@ -42,13 +42,14 @@ let p1_btn_shoot = document.getElementById("p1_btn_shoot");
 let p1_score_disp = document.getElementById("p1_score_disp");
 let p2_score_disp = document.getElementById("p2_score_disp");
 let rnd_result = document.getElementById("rnd_result");
+let btn_new_game = document.getElementById("btn_new_game");
 
 /**
  * REGISTER EVENT LISTENERS
  */
 p1_btn_menu.addEventListener('click', getP1Choice);
 p1_btn_shoot.addEventListener('click', playRound);
-
+btn_new_game.addEventListener('click', newGame);
 
 /**
  * SUPORTING FUNCTIONS
@@ -136,4 +137,31 @@ function gameOver() {
 
     // disable shoot
     p1_btn_shoot.disabled = true;
+
+    // enable new game
+    btn_new_game.disabled = false;
+}
+
+function newGame() {
+    // reset key global variables
+    p1_choice = null;
+    p2_choice = null;
+    score.p1_score = 0;
+    score.p2_score = 0;
+    // reset score display
+    p1_score_disp.textContent = '0';
+    p2_score_disp.textContent = '0';
+    rnd_result.textContent = 'Select an option on the left, then click "Shoot!"';
+    //reset buttons
+    p1_btn_shoot.disabled = false;
+    for (const button of p1_btn_menu.children) {
+        button.classList.remove("btn-selected");
+    }
+    for (const button of p2_btn_menu.children) {
+        button.classList.remove("btn-selected");
+    }
+    btn_new_game.disabled = true;
+    // reset choice images
+    p1_choice_img.src = NO_CHOICE_IMG;
+    p2_choice_img.src = NO_CHOICE_IMG;
 }
