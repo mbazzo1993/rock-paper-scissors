@@ -1,0 +1,84 @@
+* {
+    font-family: 'Futura', 'sans-serif';
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+
+.btn_menu {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 5px;
+}
+
+.btn_style {
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 7px;
+}
+
+.btn-selected {
+    background-color: #0f0ade;
+    color: white;
+    font-weight: bold;
+}
+
+.choice_image {
+    width: 100%;
+    height: auto;
+    border: 2px solid;
+    border-radius: 7px;
+    margin-bottom: 5px;
+}
+
+.results_display {
+    width: 75%;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 22px;
+    border: 2px solid;
+    border-radius: 7px;
+    padding: 20px;
+}
+
+#scores {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#btn_new_game {
+    margin-top: 20px;
+    width: 75%;
+}
+
+#scores #p1_score_disp, #scores #p2_score_disp {
+    width: 100%;
+    font-size: 28px;
+    border: 2px solid;
+    border-radius: 7px;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}

@@ -14,9 +14,16 @@ const CHOICES_STR = {
 }
 const RND_RSLTS = {
     DRAW : `Draw!`,
-    P1_WIN : 'Player 1 wins!',
-    P2_WIN : 'Player 2 wins!'
+    P1_WIN : 'You win!',
+    P2_WIN : 'Computer wins!'
 }
+const CHOICES_IMG_MAP = {
+    'r' : './rock_choice.png',
+    'p' : './paper_choice.png',
+    's' : './scissors_choice.png'
+}
+const NO_CHOICE_IMG = './no_choice.png'
+const GAME_OVER_MSG = 'Game Over!'
 
 let p1_choice;
 let p2_choice;
@@ -26,21 +33,53 @@ let score = {
     p2_score : 0
 }
 
+// Refernces to DOM nodes
+let p1_choice_img = document.getElementById("p1_choice_img");
+let p2_choice_img = document.getElementById("p2_choice_img");
+let p1_btn_menu = document.getElementById("p1_btn_menu");
+let p2_btn_menu = document.getElementById("p2_btn_menu");
+let p1_btn_shoot = document.getElementById("p1_btn_shoot");
+let p1_score_disp = document.getElementById("p1_score_disp");
+let p2_score_disp = document.getElementById("p2_score_disp");
+let rnd_result = document.getElementById("rnd_result");
+let btn_new_game = document.getElementById("btn_new_game");
+
+/**
+ * REGISTER EVENT LISTENERS
+ */
+p1_btn_menu.addEventListener('click', getP1Choice);
+p1_btn_shoot.addEventListener('click', playRound);
+btn_new_game.addEventListener('click', newGame);
+
 /**
  * SUPORTING FUNCTIONS
  */
-
-function getP1Choice() {
-    // get input and only exit if choice is valid
-    while (!CHOICES_ARR.includes(p1_choice,0)) {
-        p1_choice = prompt(`Please choose rock, paper, or scissors by typing "${CHOICES.ROCK}", "${CHOICES.PAPER}", or "${CHOICES.SCISSORS}", respectively then hitting Enter.`
-        ).toLowerCase();
+function getP1Choice(event) {
+    p1_choice = event.target.value;
+    // manage button select state for p1
+    for (const button of event.currentTarget.children) {
+        if (button.id === event.target.id) {
+            button.classList.add("btn-selected");
+        } else {
+            button.classList.remove("btn-selected");
+        }
     }
+    p1_choice_img.src = CHOICES_IMG_MAP[p1_choice];
+    p2_choice_img.src = NO_CHOICE_IMG;
 }
 
 function getP2Choice() {
     // assign player 2 a random choice
     p2_choice = CHOICES_ARR[Math.floor(Math.random()*CHOICES_ARR.length)];
+    p2_choice_img.src = CHOICES_IMG_MAP[p2_choice];
+    // manage button select state for p2
+    for (const button of p2_btn_menu.children) {
+        if (button.value === p2_choice) {
+            button.classList.add("btn-selected");
+        } else {
+            button.classList.remove("btn-selected");
+        }
+    }
 }
 
 function evalWinner() {
@@ -74,14 +113,15 @@ function evalWinner() {
     return RND_RSLTS.P2_WIN;
 }
 
-function printScore() {
-    console.log(`\nScore:\nPlayer 1 : ${score.p1_score}\nPlayer 2 : ${score.p2_score}`)
-}
-
 function playRound() {
-    getP1Choice();
     getP2Choice();
-    return evalWinner();
+    rnd_result.textContent =  evalWinner();
+    p1_score_disp.textContent = score.p1_score;
+    p2_score_disp.textContent = score.p2_score;
+
+    if (score.p1_score === 5 || score.p2_score === 5) {
+        gameOver()
+    }
 }
 
 function resetChoices() {
@@ -89,20 +129,39 @@ function resetChoices() {
     p2_choice = null;
 }
 
-function game() {
-    for (let i = 1; i < 6; i++) {
-        console.log(`******************** ROUND ${i} ********************`)
-        let rnd_result = playRound();
-        console.log(
-            `Player 1 chose ${CHOICES_STR[p1_choice]} and player 2 chose ${CHOICES_STR[p2_choice]}.
-            ${rnd_result}`
-        );
-        printScore();
-        resetChoices();
-    }
+function gameOver() {
+    // display game over message
+    rnd_result.textContent =  `${GAME_OVER_MSG} ${
+        score.p1_score > score.p2_score ? RND_RSLTS.P1_WIN :
+            score.p1_score === score.p2_score ? RND_RSLTS.DRAW : RND_RSLTS.P2_WIN}`;
+
+    // disable shoot
+    p1_btn_shoot.disabled = true;
+
+    // enable new game
+    btn_new_game.disabled = false;
 }
 
-/**
- * MAIN
- */
-game();
+function newGame() {
+    // reset key global variables
+    p1_choice = null;
+    p2_choice = null;
+    score.p1_score = 0;
+    score.p2_score = 0;
+    // reset score display
+    p1_score_disp.textContent = '0';
+    p2_score_disp.textContent = '0';
+    rnd_result.textContent = 'Select an option on the left, then click "Shoot!"';
+    //reset buttons
+    p1_btn_shoot.disabled = false;
+    for (const button of p1_btn_menu.children) {
+        button.classList.remove("btn-selected");
+    }
+    for (const button of p2_btn_menu.children) {
+        button.classList.remove("btn-selected");
+    }
+    btn_new_game.disabled = true;
+    // reset choice images
+    p1_choice_img.src = NO_CHOICE_IMG;
+    p2_choice_img.src = NO_CHOICE_IMG;
+}

@@ -2,11 +2,50 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="./style.css">
         <title>Rock-Paper-Scissors JS Game</title>
     </head>
 
     <body>
-        <h1></h1>
+        <!-- P1 COLUMN : CHOICE PIC & BUTTON MENU -->
+        <div id="p1_col" class="col">
+            <h1>Your Choice</h1>
+            <img id="p1_choice_img" 
+                class="choice_image"
+                src="./no_choice.png"
+            >
+            <div id="p1_btn_menu" class="btn_menu">
+                <button id="p1_btn_rock"  class="btn_style" value="r">Rock</button>
+                <button id="p1_btn_paper" class="btn_style" value="p">Paper</button>
+                <button id="p1_btn_scissors" class="btn_style" value="s">Scissors</button>
+            </div>
+            <button id="p1_btn_shoot" class="btn_style">Shoot!</button>
+        </div>
+
+        <!-- RESULTS COLUMN : SHOW SCORE AND ROUND RESULT -->
+        <div id="res_col" class="col">
+            <h1>Score</h1>
+            <div id="scores">
+                <div id="p1_score_disp">0</div>
+                <div id="p2_score_disp">0</div>
+            </div>
+            <div id="rnd_result" class="results_display">Select an option on the left, then click "Shoot!"</div>
+            <button id="btn_new_game" class="btn_style" disabled="true">New Game</button>
+        </div>
+
+        <!-- P2 COLUMN : CHOICE PIC & BUTTON MENU -->
+        <div id="p2_col" class="col">
+            <h1>Computer's Choice</h1>
+            <img id="p2_choice_img" 
+                class="choice_image"
+                src="./no_choice.png"
+            >
+            <div id="p2_btn_menu" class="btn_menu">
+                <button id="p2_btn_rock" class="btn_style" value="r">Rock</button>
+                <button id="p2_btn_paper" class="btn_style" value="p">Paper</button>
+                <button id="p2_btn_scissors" class="btn_style" value="s">Scissors</button>
+            </div>
+        </div>
     </body>
 
     <script src="script.js"></script>
